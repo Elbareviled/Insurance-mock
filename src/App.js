@@ -20,8 +20,6 @@ const getGraphData = (body) =>{
     maxOutPocket[element.planName] = element.maxOutPocket;
   });
   return([premium, deductible, maxOutPocket]);
-
-
 }
 
 class App extends Component {
@@ -29,7 +27,7 @@ class App extends Component {
     data: [],
     graphData: [],
     hasCompleted: false,
-    shit: [1,2,3,4]
+    toDisplay: ""
   };
 
   componentDidMount() {
@@ -37,7 +35,8 @@ class App extends Component {
     fetch('http://localhost:5000/plans/')
       .then(res => res.json())
       .then((data) =>{
-        this.setState({plans: data})
+        this.setState({data: data})
+        console.log(data);
         this.setState({graphData: getGraphData(data)})
         console.log(this.state.graphData);
         this.setState({hasCompleted: true})
@@ -47,14 +46,46 @@ class App extends Component {
       .catch(console.log)
       
   }
-  
+  updatePlan(str){
+    this.setState({toDisplay: str})
+  }
+  searchForPlanById(str){
+    if(!this.state.hasCompleted){return null};
+    for(let i = 0; i<this.state.data.length; i++){
+      if(this.state.data[i].planName === str){
+        return this.state.data[i];
+      }
+    }
+    return [];
+  }
   
   render() {
     if(!this.state.hasCompleted){ return(null); }
+    let info =<p></p>;
+    if(this.state.toDisplay === "HDHP+Premier") {
+      let plan = this.searchForPlanById(this.state.toDisplay, this.data);
+      console.log(plan);
+      info=<p>{plan.coveredBeforeDed}</p>
+    }
+    if(this.state.toDisplay === "HDHP+Standard") {
+      let plan = this.searchForPlanById(this.state.toDisplay, this.data);
+      info=<p>{plan.coveredBeforeDed[0]}</p>
+    }
+    if(this.state.toDisplay === "PPO+Premier") {
+      let plan = this.searchForPlanById(this.state.toDisplay, this.data);
+      info=<p>{plan.coveredBeforeDed[0]}</p>
+    }
+    if(this.state.toDisplay === "PPO+Standard") {
+      let plan = this.searchForPlanById(this.state.toDisplay, this.data);
+      info=<p>{plan.coveredBeforeDed[0]}</p>
+    }
     return (
       <div>
         <div style={{height:600}}>
-          <Bar data={this.state.graphData}/>
+          <Bar data={this.state.graphData} updatePlan={(value)=> this.updatePlan(value)}/>
+        </div>
+        <div style={{height:300}}>
+          {info}
         </div>
       </div>
     );
