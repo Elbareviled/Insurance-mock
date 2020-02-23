@@ -22,7 +22,11 @@ class App extends Component {
   render() {
     return (
       <div className = "container">
-        <p>{this.state.plans.deductible}</p>
+        <p>{this.state.plans.deductible} {this.state.plans.outOfPocket} {this.state.plans.premium} {this.state.plans.premium}
+        </p>
+      
+          <p>You can{this.state.plans.canKeepDoctor ? '':"'t"} keep your doctor!</p>
+        
       </div>
     );
   }
