@@ -17,7 +17,7 @@ class Bar extends Component{
                 data = {this.props.data}
                 keys={["HDHP+Premier","HDHP+Standard", "PPO+Premier", "PPO+Standard"]}
                 indexBy="expense"
-                margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+                margin={{ top: 25, right: 130, bottom: 50, left: 60 }}
                 padding={0.3}
                 groupMode="grouped"
                 colors={{ scheme: 'pastel1' }}
@@ -83,7 +83,7 @@ class Bar extends Component{
                         itemHeight: 20,
                         itemDirection: 'left-to-right',
                         itemOpacity: 0.85,
-                        symbolSize: 10,
+                        symbolSize: 20,
                         effects: [
                             {
                                 on: 'hover',

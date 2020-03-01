@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
-import Bar from './Components/Bar';
+import Visualization from './Components/Visualization';
+import AnswerBox from './Components/AnswerBox';
 import {  } from "module";
 
 const getGraphData = (body) =>{
@@ -23,13 +24,21 @@ const getGraphData = (body) =>{
 }
 
 class App extends Component {
-  state = {
-    data: [],
-    graphData: [],
-    hasCompleted: false,
-    toDisplay: ""
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      data: [],
+      graphData: [],
+      hasCompleted: false,
+      toDisplay: "HDHP+Premier",
+      currentStage: 0,
+      hasFinishedForms: false
+    };
+    this.markComplete = this.markComplete.bind(this);
+  }
+  
 
+  
   componentDidMount() {
     //console.log("hi");
     fetch('http://localhost:5000/plans/')
@@ -46,47 +55,31 @@ class App extends Component {
       .catch(console.log)
       
   }
-  updatePlan(str){
-    this.setState({toDisplay: str})
-  }
-  searchForPlanById(str){
-    if(!this.state.hasCompleted){return null};
-    for(let i = 0; i<this.state.data.length; i++){
-      if(this.state.data[i].planName === str){
-        return this.state.data[i];
-      }
-    }
-    return [];
+  
+  markComplete(){
+    this.setState({hasFinishedForms: true});
   }
   
   render() {
-    if(!this.state.hasCompleted){ return(null); }
-    let info =<p></p>;
-    if(this.state.toDisplay === "HDHP+Premier") {
-      let plan = this.searchForPlanById(this.state.toDisplay, this.data);
-      console.log(plan);
-      info=<p>{plan.coveredBeforeDed}</p>
+    if(!this.state.hasCompleted && this.state.currentStage === 5){
+      return null;
     }
-    if(this.state.toDisplay === "HDHP+Standard") {
-      let plan = this.searchForPlanById(this.state.toDisplay, this.data);
-      info=<p>{plan.coveredBeforeDed[0]}</p>
+    const forms = {
+      height:"100%",
+      marginBottom: 0
     }
-    if(this.state.toDisplay === "PPO+Premier") {
-      let plan = this.searchForPlanById(this.state.toDisplay, this.data);
-      info=<p>{plan.coveredBeforeDed[0]}</p>
-    }
-    if(this.state.toDisplay === "PPO+Standard") {
-      let plan = this.searchForPlanById(this.state.toDisplay, this.data);
-      info=<p>{plan.coveredBeforeDed[0]}</p>
-    }
-    return (
-      <div>
-        <div style={{height:600}}>
-          <Bar data={this.state.graphData} updatePlan={(value)=> this.updatePlan(value)}/>
-        </div>
-        <div style={{height:300}}>
-          {info}
-        </div>
+
+    let stages = [<p style={forms}>poop</p>,<p style={forms}>fart</p>, <p>ass</p>,<p>peepee</p>,<p>poopoo</p>]
+    return(
+      <div class="center-block" style={{marginTop:10, marginLeft:50, width:"90%",}}>
+        {!this.state.hasFinishedForms ? <AnswerBox hasFinishedForms={this.markComplete}/> :''}
+        {this.state.hasFinishedForms ? 
+          <div style={{height:"80vh"}}>
+            <Visualization graphData={this.state.graphData} data={this.state.data}/>
+          </div>:''
+        }
+        
+
       </div>
     );
   }

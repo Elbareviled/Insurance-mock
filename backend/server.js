@@ -19,8 +19,10 @@ connection.once('open', () => {
 });
 
 const insuranceRouter = require('./routes/insurance');
+const userRouter = require('./routes/user');
 
 app.use('/plans', insuranceRouter);
+app.use('/user', userRouter);
 
 app.listen(port, () => {
 	console.log(`Server is running on port: ${port}`);
