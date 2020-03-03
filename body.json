@@ -1,6 +1,10 @@
-{"premium": 100,
-    "deductible": 1000,
-    "outOfPocket": 40,
-    "canKeepDoctor": false,
-    "planType": "HMO"
+{
+  "userId": 1,
+  "age":50,
+  "sex": "f",
+  "income": 37234,
+  "numFamilyMembers": 2,
+  "numOver65": 0,
+  "numChildren": 1,
+  "preexistingConditions": ["Diabetes"]
 }

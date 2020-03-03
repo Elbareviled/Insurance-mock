@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.currencyinput {
+  border: 1px inset #ccc;
+}
+.currencyinput input {
+  border: 0;
+}
