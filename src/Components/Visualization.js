@@ -10,7 +10,6 @@ class Visualization extends Component{
             hasCompleted: false
         };
         console.log("i'm in vizualization");
-        
     }
 
     componentDidMount(){
