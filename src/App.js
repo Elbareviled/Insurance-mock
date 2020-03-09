@@ -38,7 +38,8 @@ class App extends Component {
   }
   
 
-  
+
+
   componentDidMount() {
     //console.log("hi");
     fetch('http://localhost:5000/plans/')
