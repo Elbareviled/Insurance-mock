@@ -69,7 +69,6 @@ class App extends Component {
       marginBottom: 0
     }
 
-    let stages = [<p style={forms}>poop</p>,<p style={forms}>fart</p>, <p>ass</p>,<p>peepee</p>,<p>poopoo</p>]
     return(
       <div class="center-block" style={{marginTop:10, marginLeft:50, width:"90%",}}>
         {!this.state.hasFinishedForms ? <AnswerBox hasFinishedForms={this.markComplete}/> :''}
