@@ -13,6 +13,7 @@ class AnswerBox extends Component {
             currentAnswer:'',
             questions: [],
             current: 0,
+            pastAnswers: []
         }
         this.postChange = this.postChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -24,17 +25,30 @@ class AnswerBox extends Component {
     }
 
     postChange(){
-        //console.log(this.state.currentAnswer);
-        //post current answer to server
+
+        //deep copy the past answers and then push the last thing on stack
+        let hi = []
+        hi.push(this.state.currentAnswer)
+        hi.concat(this.state.pastAnswers,hi)
+        this.setState({pastAnswers: hi})
+        //make the current empty
+        this.setState({currentAnswer:''})
+        let req = {current: this.state.current, value: this.state.currentAnswer}
+        axios.post("http://localhost:5000/user/5e588b6b1e051bfb059c8b15", req)
+        //increment
         this.setState({current: ++this.state.current})
-        console.log(this.state.current);
-        if(this.state.current === 5){
+        if(this.state.current == 5){
             this.props.hasFinishedForms();
         }
+
     }
     goBack(){
+        //decrement the current
         this.setState({current: --this.state.current});
-        console.log(this.state.current);
+        //make the current answer the old current answer
+        this.setState({currentAnswer: this.state.pastAnswers.slice(-1).pop()})
+        //pop it off the stack
+        this.setState({pastAnswers: this.state.pastAnswers.slice(0,-1)})
 
     }
 

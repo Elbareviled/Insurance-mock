@@ -43,10 +43,14 @@ router.route('/').get((req, res) =>{
 });
 
 router.route("/:uid").post((req, res) =>{
-    var query = {'userId': req.body.userId};
-    //takes a user id and based on that 
+    var query = {'_id': req.params.uid};
+    //takes a user id and based on that    
     //either createsd object with attribute or updates attributes based on new request body
-    User.findOneAndUpdate(query, req.body, {upsert: true}, function(err, doc) {
+    let attributes = ['age','sex','income','numFamilyMembers','preexistingConditions']
+    let toUpdate = {
+        [attributes[req.body.current]]: req.body.value
+    }
+    User.findOneAndUpdate(query, toUpdate, {upsert: true}, function(err, doc) {
         if (err) return res.send(500, {error: err});
         return res.send("hello " +req.body.userId);
     });
