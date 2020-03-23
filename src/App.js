@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
-import Bar from './Components/Bar';
+import Visualization from './Components/Visualization';
+import AnswerBox from './Components/AnswerBox';
 import {  } from "module";
 
 const getGraphData = (body) =>{
@@ -20,24 +21,31 @@ const getGraphData = (body) =>{
     maxOutPocket[element.planName] = element.maxOutPocket;
   });
   return([premium, deductible, maxOutPocket]);
-
-
 }
 
 class App extends Component {
-  state = {
-    data: [],
-    graphData: [],
-    hasCompleted: false,
-    shit: [1,2,3,4]
-  };
+  constructor(props){
+    super(props);
+    this.state = {
+      data: [],
+      graphData: [],
+      hasCompleted: false,
+      toDisplay: "HDHP+Premier",
+      currentStage: 0,
+      hasFinishedForms: false
+    };
+    this.markComplete = this.markComplete.bind(this);
+  }
+  
 
+  
   componentDidMount() {
     //console.log("hi");
     fetch('http://localhost:5000/plans/')
       .then(res => res.json())
       .then((data) =>{
-        this.setState({plans: data})
+        this.setState({data: data})
+        console.log(data);
         this.setState({graphData: getGraphData(data)})
         console.log(this.state.graphData);
         this.setState({hasCompleted: true})
@@ -48,14 +56,29 @@ class App extends Component {
       
   }
   
+  markComplete(){
+    this.setState({hasFinishedForms: true});
+  }
   
   render() {
-    if(!this.state.hasCompleted){ return(null); }
-    return (
-      <div>
-        <div style={{height:600}}>
-          <Bar data={this.state.graphData}/>
-        </div>
+    if(!this.state.hasCompleted && this.state.currentStage === 5){
+      return null;
+    }
+    const forms = {
+      height:"100%",
+      marginBottom: 0
+    }
+
+    return(
+      <div class="center-block" style={{marginTop:10, marginLeft:50, width:"90%",}}>
+        {!this.state.hasFinishedForms ? <AnswerBox hasFinishedForms={this.markComplete}/> :''}
+        {this.state.hasFinishedForms ? 
+          <div style={{height:"80vh"}}>
+            <Visualization graphData={this.state.graphData} data={this.state.data}/>
+          </div>:''
+        }
+        
+
       </div>
     );
   }

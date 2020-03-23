@@ -27,7 +27,16 @@
 .App-link {
   color: #61dafb;
 }
-
+.info_container{
+  margin-left:5%;
+  margin-right:5%;
+  padding: 1%;
+  border: 2px dotted grey;
+}
+.indent{
+  margin-top:-1%;
+  text-indent: 2em;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
