@@ -28,7 +28,7 @@ class AnswerBox extends Component {
         //post current answer to server
         this.setState({current: ++this.state.current})
         console.log(this.state.current);
-        if(this.state.current == 5){
+        if(this.state.current === 5){
             this.props.hasFinishedForms();
         }
     }
@@ -42,11 +42,11 @@ class AnswerBox extends Component {
         return(
         <div style={{textAlign:"center",width:"60%", margin:"auto", paddingTop:100, fontSize:"24px"}}>
             <form>
-                {this.state.current == 0 ? <Age handleChange={this.handleChange} currentAnswer={this.state.currentAnswer}></Age>:''}
-                {this.state.current == 1 ? <Sex handleChange={this.handleChange} currentAnswer={this.state.currentAnswer}/>:''}
-                {this.state.current == 2 ? <Income handleChange={this.handleChange} currentAnswer={this.state.currentAnswer}/>:''}
-                {this.state.current == 3 ? <NumberFamily handleChange={this.handleChange} currentAnswer={this.state.currentAnswer}/>:''}
-                {this.state.current == 4 ? <PEC handleChange={this.handleChange} currentAnswer={this.state.currentAnswer}/>:''}
+                {this.state.current === 0 ? <Age handleChange={this.handleChange} currentAnswer={this.state.currentAnswer}></Age>:''}
+                {this.state.current === 1 ? <Sex handleChange={this.handleChange} currentAnswer={this.state.currentAnswer}/>:''}
+                {this.state.current === 2 ? <Income handleChange={this.handleChange} currentAnswer={this.state.currentAnswer}/>:''}
+                {this.state.current === 3 ? <NumberFamily handleChange={this.handleChange} currentAnswer={this.state.currentAnswer}/>:''}
+                {this.state.current === 4 ? <PEC handleChange={this.handleChange} currentAnswer={this.state.currentAnswer}/>:''}
                 <div class="btn-group">
                     <button type="button" class="btn btn-info" onClick={this.goBack}>Prev</button>
                     <button type="button" style={{marginLeft:5}} class="btn btn-info" onClick={this.postChange}>Next</button>

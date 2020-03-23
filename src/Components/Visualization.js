@@ -1,20 +1,37 @@
 import React, { Component } from 'react';
 import yes from '../icons8-checkmark.svg'
 import Bar from './Bar';
+import axios from 'axios';
 class Visualization extends Component{
     
     constructor(props) {
         super(props);
         this.state = {
             toDisplay: "HDHP+Premier",
-            hasCompleted: false
+            hasCompleted: false,
+            recommendation: '',
+            recommendation_reasoning: '',
         };
         console.log("i'm in vizualization");
         
     }
 
     componentDidMount(){
+        
+        axios.post('http://localhost:5000/user/calculate/5e78e49fd526046594e9cbb9')
+            // .then(res => console.log(res.data));
+            .then(response => {
+                this.setState({
+                    recommendation: response.data.recommendation,
+                    recommendation_reasoning: response.data.recommendation_reasoning
+                })
+                // console.log(response.data);
+                // console.log("recommendation: " + this.state.recommendation);
+                // console.log("recommendation reasoning: " + this.state.recommendation_reasoning);
+            });
+
         this.setState({hasCompleted:true})
+        console.log("recommendation outside: " + this.state.recommendation);
     }
 
     updatePlan(str){
@@ -56,6 +73,10 @@ class Visualization extends Component{
                     <p class="indent">{plan.needRefferal ? 'Yes':'No'}{yes_no}</p>
                 <h3>Plan grade</h3>
                     <p class="indent">{plan.planGrade}</p>
+                <h3>Recommendation</h3>
+                    <p class="indent">{this.state.recommendation}</p>
+                <h3>Recommendation Reasoning</h3>
+                    <p class="indent">{this.state.recommendation_reasoning}</p> 
             </div>
         </div>
         );}
