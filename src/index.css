@@ -17,3 +17,15 @@ code {
 .currencyinput input {
   border: 0;
 }
+
+.benefitfocus-colors{
+  color: #fff;
+  background: #0077c8;
+}
+.benefitfocus-textstyle{
+  font-weight:  normal;
+  font-style: normal;
+  color: #4c5554;
+  font-family: 'BentonSansLight',Arial,Helvetica;
+  
+}
