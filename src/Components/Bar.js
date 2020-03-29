@@ -7,7 +7,7 @@ class Bar extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            selected: "HDPD+Premier"
+            selected: "HDPD Premier"
         };
     }
 
@@ -15,7 +15,7 @@ class Bar extends Component{
         return (
             <ResponsiveBar
                 data = {this.props.data}
-                keys={["HDHP+Premier","HDHP+Standard", "PPO+Premier", "PPO+Standard"]}
+                keys={["HDHP Premier","HDHP Standard", "PPO Premier", "PPO Standard"]}
                 indexBy="expense"
                 margin={{ top: 25, right: 130, bottom: 50, left: 60 }}
                 padding={0.3}
@@ -35,13 +35,13 @@ class Bar extends Component{
                 fill={[
                     {
                         match: {
-                            id: 'PPO+Standard'
+                            id: 'PPO Standard'
                         },
                         id: 'lines'
                     },
                     {
                         match: {
-                            id: 'HDHP+Standard'
+                            id: 'HDHP Standard'
                         },
                         id: 'lines'
                     }

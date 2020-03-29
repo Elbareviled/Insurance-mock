@@ -9,18 +9,18 @@ const getGraphData = (body) =>{
   let premium = {
     "expense": "Premium",
   }
-  let deductible = {
+  let deductibleInNetworkIndividual = {
     "expense": "Deductible"
   }
-  let maxOutPocket = {
+  let outOfPocketIndividualInNetwork = {
     "expense": "Max Out of Pocket"
   }
   body.forEach(element => {
     premium[element.planName] = element.premium;
-    deductible[element.planName] = element.deductible;
-    maxOutPocket[element.planName] = element.maxOutPocket;
+    deductibleInNetworkIndividual[element.planName] = element.deductibleInNetworkIndividual;
+    outOfPocketIndividualInNetwork[element.planName] = element.outOfPocketIndividualInNetwork;
   });
-  return([premium, deductible, maxOutPocket]);
+  return([premium, deductibleInNetworkIndividual, outOfPocketIndividualInNetwork]);
 }
 
 class App extends Component {

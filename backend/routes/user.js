@@ -7,14 +7,39 @@ router.route("/:uid").get((req, res) =>{
 
     User.findById(req.params.uid)
         .then(user => res.json(user))
-        .catch(err => res.status(400).json("ERROR"));
+        .catch(err => res.status(400).json("ERROR " + err));
 
 });
 
+router.route('/add').post((req,res) => {
+    const userId = req.body.userId;
+    const age = req.body.age;
+    const sex = req.body.sex;
+    const income = req.body.income;
+    const numFamilyMembers = req.body.numFamilyMembers;
+    const numChildren = req.body.numChildren;
+    const preexistingConditions = req.body.preexistingConditions;
+
+    const newUser = new User({
+        userId,
+        age,
+        sex,
+        income,
+        numFamilyMembers,
+        numChildren,
+        preexistingConditions,
+    });
+
+    newUser.save()
+    .then(() => res.json('User Added!'))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+
 router.route('/').get((req, res) =>{
     User.find()
-        .then(plans => res.json(plans))
-        .catch(err => res.status(400).json("ERROR"));
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json("ERROR " + err  ));
 });
 
 router.route("/:uid").post((req, res) =>{
@@ -37,7 +62,7 @@ router.route("/:uid").post((req, res) =>{
 
 function calculate(id,s,i,a,fam,prec){
     let points = 0;
-    let preexistinConditions = [{precondition: "Asthma" , val : 1}, 
+    let preCons = [{precondition: "Asthma" , val : 1}, 
         {precondition: "High Colesterol", val: 2},
         {precondition: "High Blood Pressure", val: 2},
         {precondition: "Arthritis", val:4},
@@ -58,16 +83,16 @@ function calculate(id,s,i,a,fam,prec){
         recommend.reasoning.push("Health care costs for American's under 19 are typically lower than average");
     }else if (a < 35){
         points += 1;
-        recommend.reasoning.push("Health care costs for American's under above the age of 19 are slightly higher than average");
+        recommend.reasoning.push("Health care costs for American's above the age of 19 are slightly higher than average");
     }else if (a < 44){
-        recommend.reasoning.push("Health care costs for American's under above over the age of 35 higher than average");
+        recommend.reasoning.push("Health care costs for American's over the age of 35 higher than average");
         points += 2;
     }else if (a < 54){
         points += 3;
-        recommend.reasoning.push("Health care costs for American's under above over the age of 44 higher than average");
+        recommend.reasoning.push("Health care costs for American's over the age of 44 higher than average");
     }else{
         points +=4;
-        recommend.reasoning.push("Health care costs for American's under above over the age of 54 significantly higher than average");
+        recommend.reasoning.push("Health care costs for American's over the age of 54 significantly higher than average");
     }
 
     if (prec.length === 0){
@@ -102,6 +127,12 @@ function calculate(id,s,i,a,fam,prec){
     return recommend; 
 }
 
+router.route('/:uid').delete((req, res) => {
+    User.findByIdAndDelete(req.params.id)
+    .then(() => res.json('User deleted.'))
+    .catch(err => res.status(400).json('Error: ' + err));
+})
+
 router.route('/calculate/:uid').post((req, res) =>{
     
     User.findById(req.params.uid).exec(function(err,result){
@@ -125,7 +156,7 @@ router.route('/calculate/:uid').post((req, res) =>{
             if (income < 70000){
                 rec += " Premier";
             }else{
-                rec += "Standard";
+                rec += " Standard";
             }
     
             res.send({
