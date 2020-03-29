@@ -8,7 +8,7 @@ class Visualization extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            toDisplay: "HDHP+Premier",
+            toDisplay: "HDHP Premier",
             hasCompleted: false,
             recommendation: '',
             recommendation_reasoning: "",
@@ -75,7 +75,7 @@ class Visualization extends Component{
         console.log(this.props);
         if(!this.state.hasCompleted){ return null; }
         let plan = this.searchForPlanById(this.state.toDisplay, this.props.data);
-        let info=<p class="indent">{plan.coveredBeforeDed.join(", ")}.</p>
+        let info=<p class="indent">{plan.coveredBeforeDeductible.join(", ")}.</p>
         let yes_no;
         if(!plan.needRefferal){
         yes_no = <img src={yes} alt="yes check" style={{height: 18, marginLeft:5, marginBottom:-2}}/>
