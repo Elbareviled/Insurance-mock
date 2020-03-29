@@ -158,6 +158,7 @@ router.route('/calculate/:uid').post((req, res) =>{
             }else{
                 rec += " Standard";
             }
+    
             res.send({
                 userId: userId,
                 sex: sex,

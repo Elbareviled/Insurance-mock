@@ -10,7 +10,8 @@ class Visualization extends Component{
             toDisplay: "HDHP+Premier",
             hasCompleted: false,
             recommendation: '',
-            recommendation_reasoning: '',
+            recommendation_reasoning: "",
+
         };
         console.log("i'm in vizualization");
         
@@ -31,7 +32,21 @@ class Visualization extends Component{
             });
 
         this.setState({hasCompleted:true})
+        axios.post('http://localhost:5000/user/calculate/5e78e49fd526046594e9cbb9')
+            // .then(res => console.log(res.data));
+            .then(response => {
+                this.setState({
+                    recommendation: response.data.recommendation,
+                    recommendation_reasoning: <h2>{response.data.recommendation_reasoning.map((thing) => thing + ". ")}</h2>
+                })
+                console.log(response.data);
+                console.log("recommendation: " + this.state.recommendation);
+                console.log("recommendation reasoning: " + this.state.recommendation_reasoning);
+            });
+
+        this.setState({hasCompleted:true})
         console.log("recommendation outside: " + this.state.recommendation);
+        
     }
 
     updatePlan(str){
@@ -67,6 +82,7 @@ class Visualization extends Component{
                 <Bar data={this.props.graphData} updatePlan={(value)=> this.updatePlan(value)}/>
             </div>
             <div style={{height:"10%"}}>
+                {this.state.recommendation_reasoning}
                 <h3>What you won't have to pay before your deductible with the {this.state.toDisplay}?</h3>
                     {info}
                 <h3>Will I need a referral to see a specialist?</h3>
@@ -77,6 +93,7 @@ class Visualization extends Component{
                     <p class="indent">{this.state.recommendation}</p>
                 <h3>Recommendation Reasoning</h3>
                     <p class="indent">{this.state.recommendation_reasoning}</p> 
+
             </div>
         </div>
         );}
