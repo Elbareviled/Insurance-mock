@@ -20,7 +20,7 @@ class Bar extends Component{
                 margin={{ top: 25, right: 130, bottom: 50, left: 60 }}
                 padding={0.3}
                 groupMode="grouped"
-                colors={{ scheme: 'pastel1' }}
+                colors={this.props.colors}
                 defs={[
                     {
                         id: 'lines',
@@ -32,6 +32,7 @@ class Bar extends Component{
                         spacing: 10
                     }
                 ]}
+                /*
                 fill={[
                     {
                         match: {
@@ -46,7 +47,7 @@ class Bar extends Component{
                         id: 'lines'
                     }
 
-                ]}
+                ]}*/
                 borderColor={{ from: 'color', modifiers: [ [ 'darker', 1.6 ] ] }}
                 axisTop={null}
                 axisRight={null}
