@@ -83,16 +83,16 @@ function calculate(id,s,i,a,fam,prec){
         recommend.reasoning.push("Health care costs for American's under 19 are typically lower than average");
     }else if (a < 35){
         points += 1;
-        recommend.reasoning.push("Health care costs for American's under above the age of 19 are slightly higher than average");
+        recommend.reasoning.push("Health care costs for American's above the age of 19 are slightly higher than average");
     }else if (a < 44){
-        recommend.reasoning.push("Health care costs for American's under above over the age of 35 higher than average");
+        recommend.reasoning.push("Health care costs for American's over the age of 35 higher than average");
         points += 2;
     }else if (a < 54){
         points += 3;
-        recommend.reasoning.push("Health care costs for American's under above over the age of 44 higher than average");
+        recommend.reasoning.push("Health care costs for American's over the age of 44 higher than average");
     }else{
         points +=4;
-        recommend.reasoning.push("Health care costs for American's under above over the age of 54 significantly higher than average");
+        recommend.reasoning.push("Health care costs for American's over the age of 54 significantly higher than average");
     }
 
     if (prec.length === 0){
