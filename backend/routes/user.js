@@ -72,7 +72,7 @@ function calculate(id,s,i,a,fam,prec){
         {precondition: "Heart Disease", val: 5},
         {precondition: "Stroke", val: 5}];
     
-    var recommend = {p: 0, reasoning: []}
+    var recommend = {p: 0, reasoning: [], recommendationLong: []}
     
     if (s === 'f') {
         points += 1
@@ -86,6 +86,7 @@ function calculate(id,s,i,a,fam,prec){
         recommend.reasoning.push("Health care costs for American's above the age of 19 are slightly higher than average");
     }else if (a < 44){
         recommend.reasoning.push("Health care costs for American's over the age of 35 higher than average");
+        recommend.recommendationLong.push("An analysis by the Kaiser Family Foundation of a Medical Expenditure Panel Survey shows that individuals between the ages of 35 and 44 spend $4,262 dollars compared to $2,153 spent by individuals under the age of 19");
         points += 2;
     }else if (a < 54){
         points += 3;
@@ -99,6 +100,7 @@ function calculate(id,s,i,a,fam,prec){
         points += 0;
     }else if (prec.length > 1){
         recommend.reasoning.push("Individuals with more than one pre-existing condition have, on average, significantly higher healthcare costs");
+        recommend.recommendationLong.push("Analysis of Medical Expenditure Panel Surveys show that individuals with multiple diagnised chronic health conditions have high medical costs. Conditions such as Heart Disease, Stroke, and Emphysema each raised the cost of healthcare from around $5,500 dollars to $16,000")
         points += 5;
     }else if(prec.includes("Asthma")){
         recommend.reasoning.push("Individuals diagnosed with Asthma have on average 1.5 times higher medical costs");
@@ -148,6 +150,8 @@ router.route('/calculate/:uid').post((req, res) =>{
             var calcs = calculate(userId,sex,income,age,numFamilyMembers,preexistingconditions);
             points = calcs.p;
             var reasoning = calcs.reasoning;
+            var recLong = calcs.recommendationLong;
+
             if (points > 4 || age < 55){
                 var rec = "HDHP Plan";
             }else{
@@ -168,6 +172,7 @@ router.route('/calculate/:uid').post((req, res) =>{
                 preexistingcondition: preexistingconditions,
                 recommendation: rec,
                 recommendation_reasoning: reasoning,
+                recommendationLong: recLong,
                 placeholder_dollar_amount: 4500,
                 points: points
             })

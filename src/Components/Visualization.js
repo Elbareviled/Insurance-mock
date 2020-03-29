@@ -3,6 +3,10 @@ import yes from '../icons8-checkmark.svg'
 import Bar from './Bar';
 import axios from 'axios';
 import styles from '../App.css'; 
+import Popup from "reactjs-popup";
+
+
+  
 class Visualization extends Component{
     
     constructor(props) {
@@ -12,7 +16,7 @@ class Visualization extends Component{
             hasCompleted: false,
             recommendation: '',
             recommendation_reasoning: "",
-
+            recommendationLong: "",
         };
         console.log("i'm in vizualization");
         
@@ -25,7 +29,8 @@ class Visualization extends Component{
             .then(response => {
                 this.setState({
                     recommendation: response.data.recommendation,
-                    recommendation_reasoning: <div>{response.data.recommendation_reasoning.map((thing) => <p> {thing}.</p>)}</div>
+                    recommendation_reasoning: <div>{response.data.recommendation_reasoning.map((thing) => <p> {thing}.</p>)}</div>,
+                    recommendationLong: <div>{response.data.recommendationLong.map((thing1) => <p> {thing1}.</p>)}</div>
                 })
                 console.log(response.data);
                 console.log("recommendation: " + this.state.recommendation);
@@ -54,9 +59,20 @@ class Visualization extends Component{
     joinRecommendation(){
         
     }
-
+    
     render(){
-        
+        const PopupExample = () => (
+            <Popup trigger={<button>?</button>} position="top left">
+              {close => (
+                <div>
+                  {this.state.recommendationLong} 
+                  <a className="close" onClick={close}>
+                    &times;
+                  </a>
+                </div>
+              )}
+            </Popup>
+          );
         console.log(this.props);
         if(!this.state.hasCompleted){ return null; }
         let plan = this.searchForPlanById(this.state.toDisplay, this.props.data);
@@ -80,9 +96,18 @@ class Visualization extends Component{
                         <p class="indent">{plan.needRefferal ? 'Yes':'No'}{yes_no}</p>
                     <p>Plan grade</p>
                         <p class="indent">{plan.planGrade}</p>
+                    <p>Standard Copay</p>
+                        <p class="indent">{plan.inNetworkCopay}</p>
+                    <p>Prescription Drug Cost</p> 
+                        <p class="indent">{plan.inNetworkDrugCopayAvg}</p>
+                    <p>In Network ER Visit</p>
+                        <p class="indent">{plan.erVisitInNetwork}</p> 
+                    <p>In Network Urgent Care</p>
+                        <p class="indent">{plan.inNetworkUrgentCare}</p>
                 </div>
             </div>
             <div style={{fontSize: "20px"}}>
+                <PopupExample/>
                 {this.state.recommendation_reasoning}
             </div>
 

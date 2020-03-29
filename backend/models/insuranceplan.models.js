@@ -53,7 +53,20 @@ const insurancePlanSchema = new Schema({
 	outOfPocketIndividualOutOfNetwork: Number,
 	outOfPocketFamilyInNetwork: Number,
 	outOfPocketFamilyOutOfNetwork: Number,
-	canKeeptDoctor: Boolean
+	canKeeptDoctor: Boolean,
+	inNetworkCopay: Number, //Avg in provider office visit cost
+	inNetworkDrugCopayAvg: String, //Avg in network drug copay cost
+	outOfNetworkCopay: String, //Coinsurance cost %
+	outOfNetworkDrugCopay: String, //Coinsurance cost %
+	erVisitInNetwork: String, //ER Visit in Network
+	erVisitOutOfNetwork: String, // ER Visit Out of Network
+	erTransportInNetwork: String,
+	erTransportOutOfNetworK: String,
+	inNetworkUrgentCare: String,
+	outOfNetworkUrgentCare: String,
+	inNetworkRehabilitation: String, //Coinsurance cost % for rehab services
+	outOfNetworkRehabilitation: String, //Coinsurance cost % for out of network services
+
 },{
 	timestamps: true,
 });
