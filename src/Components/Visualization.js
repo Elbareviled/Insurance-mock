@@ -2,12 +2,29 @@ import React, { Component } from 'react';
 import yes from '../icons8-checkmark.svg'
 import Bar from './Bar';
 import axios from 'axios';
+import Popup from "reactjs-popup";
+
+
+
+
+const PopupExample = () => (
+    <Popup trigger = {<button>Trigger</button>} position = "top left">
+        {close => (
+            <div>
+                Information To Display
+                <a className = "close" onclick={close}>
+                    &times;
+                </a>
+            </div>
+        )}
+    </Popup>
+);
 class Visualization extends Component{
     
     constructor(props) {
         super(props);
         this.state = {
-            toDisplay: "HDHP+Premier",
+            toDisplay: "HDHP Premier",
             hasCompleted: false,
             recommendation: '',
             recommendation_reasoning: "",
@@ -18,19 +35,6 @@ class Visualization extends Component{
     }
 
     componentDidMount(){
-        
-        axios.post('http://localhost:5000/user/calculate/5e78e49fd526046594e9cbb9')
-            // .then(res => console.log(res.data));
-            .then(response => {
-                this.setState({
-                    recommendation: response.data.recommendation,
-                    recommendation_reasoning: response.data.recommendation_reasoning
-                })
-                // console.log(response.data);
-                // console.log("recommendation: " + this.state.recommendation);
-                // console.log("recommendation reasoning: " + this.state.recommendation_reasoning);
-            });
-
         this.setState({hasCompleted:true})
         axios.post('http://localhost:5000/user/calculate/5e78e49fd526046594e9cbb9')
             // .then(res => console.log(res.data));
@@ -62,13 +66,13 @@ class Visualization extends Component{
             }
         return [];
         }
-
+    
     render(){
-
+        
         console.log(this.props);
         if(!this.state.hasCompleted){ return null; }
         let plan = this.searchForPlanById(this.state.toDisplay, this.props.data);
-        let info=<p class="indent">{plan.coveredBeforeDed.join(", ")}.</p>
+        let info=<p class="indent">{plan.coveredBeforeDeductible.join(", ")}.</p>
         let yes_no;
         if(!plan.needRefferal){
         yes_no = <img src={yes} alt="yes check" style={{height: 18, marginLeft:5, marginBottom:-2}}/>
@@ -82,7 +86,8 @@ class Visualization extends Component{
                 <Bar data={this.props.graphData} updatePlan={(value)=> this.updatePlan(value)}/>
             </div>
             <div style={{height:"10%"}}>
-                {this.state.recommendation_reasoning}
+                <PopupExample/>
+                {/* {this.state.recommendation_reasoning} */}
                 <h3>What you won't have to pay before your deductible with the {this.state.toDisplay}?</h3>
                     {info}
                 <h3>Will I need a referral to see a specialist?</h3>
