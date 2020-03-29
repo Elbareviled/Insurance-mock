@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import yes from '../icons8-checkmark.svg'
 import Bar from './Bar';
 import axios from 'axios';
+import styles from '../App.css'; 
 class Visualization extends Component{
     
     constructor(props) {
@@ -24,7 +25,7 @@ class Visualization extends Component{
             .then(response => {
                 this.setState({
                     recommendation: response.data.recommendation,
-                    recommendation_reasoning: <h2>{response.data.recommendation_reasoning.map((thing) => thing + ". ")}</h2>
+                    recommendation_reasoning: <div>{response.data.recommendation_reasoning.map((thing) => <p> {thing}.</p>)}</div>
                 })
                 console.log(response.data);
                 console.log("recommendation: " + this.state.recommendation);
@@ -49,6 +50,10 @@ class Visualization extends Component{
             }
         return [];
         }
+    
+    joinRecommendation(){
+        
+    }
 
     render(){
 
@@ -62,22 +67,26 @@ class Visualization extends Component{
         }
         else{
         yes_no =null;
-        }
+        }   
         return (
         <div style={{height:"100%"}}>
-            <div style={{height:"60%"}}>
+            
+            <div style={{height:"75%", display:"flex", flexDirection:"row",borderBottom:"2px solid black"}}>
                 <Bar data={this.props.graphData} updatePlan={(value)=> this.updatePlan(value)}/>
+                <div style={{height:"100%", width:"40%", marginLeft:"5%", borderLeft:"2px solid black", paddingLeft:"15px", paddingTop:"30px"}}>
+                    <p>What you won't have to pay before your deductible with the {this.state.toDisplay}?</p>
+                        {info}
+                    <p>Will I need a referral to see a specialist?</p>
+                        <p class="indent">{plan.needRefferal ? 'Yes':'No'}{yes_no}</p>
+                    <p>Plan grade</p>
+                        <p class="indent">{plan.planGrade}</p>
+                </div>
             </div>
-            <div style={{height:"10%"}}>
+            <div style={{fontSize: "20px"}}>
                 {this.state.recommendation_reasoning}
-                <h3>What you won't have to pay before your deductible with the {this.state.toDisplay}?</h3>
-                    {info}
-                <h3>Will I need a referral to see a specialist?</h3>
-                    <p class="indent">{plan.needRefferal ? 'Yes':'No'}{yes_no}</p>
-                <h3>Plan grade</h3>
-                    <p class="indent">{plan.planGrade}</p>
-
             </div>
+
+            
         </div>
         );}
 }
