@@ -1,5 +1,15 @@
 .App {
   text-align: center;
+  
+}
+*{
+  font-weight:  normal;
+  font-style: normal;
+  color: #4c5554;
+  font-family: Verdana,Geneva,Arial,Helvetica,sans-serif;
+  line-height: 1.4;
+  word-spacing: 1.1pt;
+  
 }
 
 .App-logo {
@@ -44,4 +54,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.benefitfocus-colors{
+  color: #fff;
+  background: #0077c8;
+}
+.benefitfocusText{
+
 }
