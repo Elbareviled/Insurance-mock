@@ -44,7 +44,8 @@
   border: 2px dotted grey;
 }
 .indent{
-  margin-top:-1%;
+  margin-top:-4%;
+  margin-bottom:5%;
   text-indent: 2em;
 }
 @keyframes App-logo-spin {

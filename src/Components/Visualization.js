@@ -15,7 +15,7 @@ class Visualization extends Component{
             toDisplay: "HDHP Premier",
             hasCompleted: false,
             recommendation: '',
-            recommendation_reasoning: ""
+            recommendation_reasoning: [],
             recommendationLong: "",
             colorArray: []
         };
@@ -30,13 +30,17 @@ class Visualization extends Component{
             .then(response => {
                 this.setState({
                     recommendation: response.data.recommendation,
-                    recommendation_reasoning: <div>{response.data.recommendation_reasoning.map((thing) => <p> {thing}.</p>)}</div>,
-                    recommendationLong: <div>{response.data.recommendationLong.map((thing1) => <p> {thing1}.</p>)}</div>
+                    recommendation_reasoning: response.data.recommendation_reasoning,
+                    recommendationLong: response.data.recommendationLong
                 })
                 console.log(response.data);
                 console.log("recommendation: " + this.state.recommendation);
-                console.log("recommendation reasoning: " + this.state.recommendation_reasoning);
+                console.log(this.state.recommendation_reasoning);
                 this.getColors();
+                
+            })
+            .then(()=>{
+                this.addHover();
             });
 
         
@@ -50,13 +54,10 @@ class Visualization extends Component{
     }
 
     getColors(){
-        let colors = ['#FF5050','#CC3300','#FF6600','#800000'];
-        console.log(this.props.data);
+        let colors = ['#FF3333','#FF6633','#FF9933','#FFCC33'];
         for(let i =0; i<this.props.data.length; i++){
-            console.log(this.props.data[i], this.state.recommendation.split(" ")[0] + " " + this.state.recommendation.split(" ")[2]);
             if (this.props.data[i].planName === (this.state.recommendation.split(" ")[0] + " "+ this.state.recommendation.split(" ")[2])){
-                colors[i] = "#0077c8";
-                console.log(this.state.recommendation, "has color #0077c8");
+                colors[i] = "#32BEA6";
             }
         }
         this.setState({colorArray:colors})
@@ -70,15 +71,37 @@ class Visualization extends Component{
             }
         return [];
         }
-    
-    joinRecommendation(){
+    addHover(){
+        console.log(this.state.recommendation_reasoning);
+        var longRec = this.state.recommendationLong;
+        var shortRec = this.state.recommendation_reasoning;
+        var hi = this.state.recommendation_reasoning.map(function(x, i){
+            return {"shortRec":shortRec[i], "longRec": longRec[i]}
+        });
+        console.log("hello");
+        console.log(hi);
+        var tags = hi.map((thing) =>{
+        return <div>
+            {thing.shortRec} &ensp;
+                <Popup trigger={<button variant="primary" class="btn btn-info" size="sm" >Tell me more </button>} position="top left">
+                    {close => (
+                        <div>
+                            {thing.longRec}
+                            <a className="close" onClick={close}>&times;</a>
+                        </div>
+                    )}
+                </Popup></div>
+        });
+        this.setState({recommendation_reasoning:tags});
+        console.log(tags);
         
+
     }
     
     render(){
 
         const PopupExample = () => (
-            <Popup trigger={<button>?</button>} position="top left">
+            <Popup trigger={<button>?</button>} position="center left">
               {close => (
                 <div>
                   {this.state.recommendationLong} 
@@ -104,9 +127,9 @@ class Visualization extends Component{
         return (
         <div style={{height:"100%"}}>
             
-            <div style={{height:"75%", display:"flex", flexDirection:"row",borderBottom:"2px solid black"}}>
+            <div style={{height:"75%", display:"flex", flexDirection:"row",borderBottom:"2px solid black", fontSize:"14px"}}>
                 <Bar data={this.props.graphData} updatePlan={(value)=> this.updatePlan(value)} colors={this.state.colorArray}/>
-                <div style={{height:"100%", width:"40%", marginLeft:"5%", borderLeft:"2px solid black", paddingLeft:"15px", paddingTop:"30px"}}>
+                <div style={{height:"100%", width:"40%", marginLeft:"5%", borderLeft:"2px solid black", paddingLeft:"15px", paddingTop:"10px"}}>
                     <p>What you won't have to pay before your deductible with the {this.state.toDisplay}?</p>
                         {info}
                     <p>Will I need a referral to see a specialist?</p>
@@ -123,9 +146,10 @@ class Visualization extends Component{
                         <p class="indent">{plan.inNetworkUrgentCare}</p>
                 </div>
             </div>
-            <div style={{fontSize: "20px"}}>
-                <PopupExample/>
+            <div style={{fontSize:"30px", fontWeight:"bold", fontStyle:"italic", color:"#32BEA6", marginBottom:"1%"}}>We highly suggest that you go with the {this.state.recommendation}</div>
+            <div style={{fontSize: "16px"}}>
                 {this.state.recommendation_reasoning}
+
             </div>
 
             
