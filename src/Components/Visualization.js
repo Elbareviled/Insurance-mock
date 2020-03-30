@@ -15,8 +15,9 @@ class Visualization extends Component{
             toDisplay: "HDHP Premier",
             hasCompleted: false,
             recommendation: '',
-            recommendation_reasoning: "",
+            recommendation_reasoning: ""
             recommendationLong: "",
+            colorArray: []
         };
         console.log("i'm in vizualization");
         
@@ -35,8 +36,10 @@ class Visualization extends Component{
                 console.log(response.data);
                 console.log("recommendation: " + this.state.recommendation);
                 console.log("recommendation reasoning: " + this.state.recommendation_reasoning);
+                this.getColors();
             });
 
+        
         this.setState({hasCompleted:true})
         console.log("recommendation outside: " + this.state.recommendation);
         
@@ -44,8 +47,20 @@ class Visualization extends Component{
 
     updatePlan(str){
         this.setState({toDisplay: str})
-      }
+    }
 
+    getColors(){
+        let colors = ['#FF5050','#CC3300','#FF6600','#800000'];
+        console.log(this.props.data);
+        for(let i =0; i<this.props.data.length; i++){
+            console.log(this.props.data[i], this.state.recommendation.split(" ")[0] + " " + this.state.recommendation.split(" ")[2]);
+            if (this.props.data[i].planName === (this.state.recommendation.split(" ")[0] + " "+ this.state.recommendation.split(" ")[2])){
+                colors[i] = "#0077c8";
+                console.log(this.state.recommendation, "has color #0077c8");
+            }
+        }
+        this.setState({colorArray:colors})
+    }
     searchForPlanById(str){
         if(!this.state.hasCompleted){return null};
             for(let i = 0; i<this.props.data.length; i++){
@@ -61,6 +76,7 @@ class Visualization extends Component{
     }
     
     render(){
+
         const PopupExample = () => (
             <Popup trigger={<button>?</button>} position="top left">
               {close => (
@@ -73,6 +89,7 @@ class Visualization extends Component{
               )}
             </Popup>
           );
+
         console.log(this.props);
         if(!this.state.hasCompleted){ return null; }
         let plan = this.searchForPlanById(this.state.toDisplay, this.props.data);
@@ -88,7 +105,7 @@ class Visualization extends Component{
         <div style={{height:"100%"}}>
             
             <div style={{height:"75%", display:"flex", flexDirection:"row",borderBottom:"2px solid black"}}>
-                <Bar data={this.props.graphData} updatePlan={(value)=> this.updatePlan(value)}/>
+                <Bar data={this.props.graphData} updatePlan={(value)=> this.updatePlan(value)} colors={this.state.colorArray}/>
                 <div style={{height:"100%", width:"40%", marginLeft:"5%", borderLeft:"2px solid black", paddingLeft:"15px", paddingTop:"30px"}}>
                     <p>What you won't have to pay before your deductible with the {this.state.toDisplay}?</p>
                         {info}
