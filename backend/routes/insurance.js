@@ -19,26 +19,8 @@ router.route('/:id').delete((req, res) =>{
     .then(user=> res.json(user))
     .catch(err => res.status(400).json("ERROR " + err));
 });
-// router.route('/').post((req, res) => {
-//     console.log(req);
-//     console.log(res);
-//     const premium = req.body.premium;
-//     const deductible = req.body.deductible;
-//     const outOfPocket = req.body.outOfPocket;
-//     const canKeepDoctor = req.body.canKeepDoctor;
-//     const planType = req.body.planType;
-//     const newPlan = new Plan({
-//         premium,
-//         deductible,
-//         outOfPocket,
-//         canKeepDoctor,
-//         planType
-//     });
 
-//     newPlan.save()
-//     .then(() => res.json("plan added"))
-//     .catch(err => res.status(400).json("ERROR")); 
-// });
+
 router.route('/add').post((req, res) => {
     console.log(req);
     console.log(res);
@@ -56,7 +38,19 @@ router.route('/add').post((req, res) => {
         outOfPocketIndividualOutOfNetwork: req.body.outOfPocketIndividualOutOfNetwork,
         outOfPocketFamilyInNetwork: req.body.outOfPocketFamilyInNetwork,
         outOfPocketFamilyOutOfNetwork: req.body.outOfPocketFamilyOutOfNetwork,
-        canKeepDoctor: req.body.canKeepDoctor
+        canKeepDoctor: req.body.canKeepDoctor,
+        inNetworkCopay: req.body.inNetworkCopay, //Avg in provider office visit cost
+        inNetworkDrugCopayAvg: req.body.inNetworkDrugCopayAvg, //Avg in network drug copay cost
+        outOfNetworkCopay: req.body.outOfNetworkCopay, //Coinsurance cost %
+        outOfNetworkDrugCopay: req.body.outOfNetworkDrugCopay, //Coinsurance cost %
+        erVisitInNetwork: req.body.erVisitInNetwork, //ER Visit in Network
+        erVisitOutOfNetwork: req.body.erVisitOutOfNetwork, // ER Visit Out of Network
+        erTransportInNetwork: req.body.erTransportInNetwork,
+        erTransportOutOfNetwork: req.body.erTransportOutOfNetwork,
+        inNetworkUrgentCare: req.body.inNetworkUrgentCare,
+        outOfNetworkUrgentCare: req.body.outOfNetworkUrgentCare,
+        inNetworkRehabilitation: req.body.inNetworkRehabilitation, //Coinsurance cost % for rehab services
+        outOfNetworkRehabilitation: req.body.outOfNetworkRehabilitation, //Coinsurance cost % for out of network services
     });
 
     newPlan.save()
