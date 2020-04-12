@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import Animated from './SalarySVG.svg'
 class Income extends Component{
     
     constructor(props){
@@ -17,6 +17,9 @@ class Income extends Component{
         }
         return(
            <div> 
+                <div>
+                <object style={{height:240, width:240}}type="image/svg/xml" data={Animated}></object>
+                </div>
                 <p>Enter Estimated Yearly Income</p>
                 <div class="input-group mb-3" style={incomeStyle}>
                     <div class="input-group-prepend">
