@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-
+import Animated from './PreExistingSVG.svg';
 class PEC extends Component{
 
     constructor(props){
@@ -19,6 +19,9 @@ class PEC extends Component{
     render(){
         return(
             <div>
+                <div>
+                <object type="image/svg/xml" data={Animated}></object>
+                </div>
                 <div class="form-group" onSubmit={this.handleSubmit}>
                     <label for="enterAge">Enter Any Prexisting Conditions You Have</label>
                     <input style={{textAlign:"center"}} class="form-control" id="enterAge" onChange={this.props.handleChange}/>

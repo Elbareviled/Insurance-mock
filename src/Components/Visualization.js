@@ -4,6 +4,8 @@ import Bar from './Bar';
 import axios from 'axios';
 import styles from '../App.css'; 
 import Popup from "reactjs-popup";
+import RestartButton from './RestartButton.js'
+
 
 
   
@@ -127,7 +129,7 @@ class Visualization extends Component{
         return (
         <div style={{height:"100%"}}>
             
-            <div style={{height:"75%", display:"flex", flexDirection:"row",borderBottom:"2px solid black", fontSize:"14px"}}>
+            <div style={{height:"90%", display:"flex", flexDirection:"row",borderBottom:"2px solid black", fontSize:"14px"}}>
                 <Bar data={this.props.graphData} updatePlan={(value)=> this.updatePlan(value)} colors={this.state.colorArray}/>
                 <div style={{height:"100%", width:"40%", marginLeft:"5%", borderLeft:"2px solid black", paddingLeft:"15px", paddingTop:"10px"}}>
                     <p>What you won't have to pay before your deductible with the {this.state.toDisplay}?</p>
@@ -149,8 +151,11 @@ class Visualization extends Component{
             <div style={{fontSize:"30px", fontWeight:"bold", fontStyle:"italic", color:"#32BEA6", marginBottom:"1%"}}>We highly suggest that you go with the {this.state.recommendation}</div>
             <div style={{fontSize: "16px"}}>
                 {this.state.recommendation_reasoning}
-
             </div>
+
+            <RestartButton></RestartButton>
+
+
 
             
         </div>
