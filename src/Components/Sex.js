@@ -16,17 +16,17 @@ class Sex extends Component{
             <p>Enter Your Biological Sex</p>
 
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupOfDefaultRadios"/>
+                <input type="radio" class="custom-control-input" value="1"id="defaultGroupExample1" name="groupOfDefaultRadios" onChange={this.props.handleChange}/>
                 <label class="custom-control-label" for="defaultGroupExample1">Male</label>
             </div>
 
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupOfDefaultRadios"/>
+                <input type="radio" class="custom-control-input" value="0" id="defaultGroupExample2" name="groupOfDefaultRadios" onChange={this.props.handleChange}/>
                 <label class="custom-control-label" for="defaultGroupExample2">Female</label>
             </div>
 
             <div class="custom-control custom-radio">
-                <input type="radio" class="custom-control-input" id="defaultGroupExample3" name="groupOfDefaultRadios"/>
+                <input type="radio" class="custom-control-input" value="-1" id="defaultGroupExample3" name="groupOfDefaultRadios" onChange={this.props.handleChange}/>
                 <label class="custom-control-label" for="defaultGroupExample3">Other</label>
             </div>
                 

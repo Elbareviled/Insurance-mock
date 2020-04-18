@@ -27,7 +27,7 @@ class Visualization extends Component{
 
     componentDidMount(){
         this.setState({hasCompleted:true})
-        axios.post('http://localhost:5000/user/calculate/5e78e49fd526046594e9cbb9')
+        axios.post('http://localhost:5000/user/calculate/5e588b6b1e051bfb059c8b15')
             // .then(res => console.log(res.data));
             .then(response => {
                 this.setState({
@@ -58,6 +58,9 @@ class Visualization extends Component{
     getColors(){
         let colors = ['#FF3333','#FF6633','#FF9933','#FFCC33'];
         for(let i =0; i<this.props.data.length; i++){
+            console.log("fds;lkfjasd;lfjsal;fkj");
+            console.log(this.props.data[i].planName);
+            console.log(this.state.recommendation.split(" ")[0] + " "+ this.state.recommendation.split(" ")[2]);
             if (this.props.data[i].planName === (this.state.recommendation.split(" ")[0] + " "+ this.state.recommendation.split(" ")[2])){
                 colors[i] = "#32BEA6";
             }

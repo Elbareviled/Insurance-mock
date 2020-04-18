@@ -74,7 +74,7 @@ function calculate(id,s,i,a,fam,prec){
     
     var recommend = {p: 0, reasoning: [], recommendationLong: []}
     
-    if (s === 'f') {
+    if (s === '0') {
         points += 1
         recommend.reasoning.push("On average females have higher usage rates of healthcare");
     };
@@ -147,7 +147,9 @@ router.route('/calculate/:uid').post((req, res) =>{
             var numFamilyMembers = result.numFamilyMembers;
             var preexistingconditions = result.preexistingConditions;
             
+            console.log(result);
             var calcs = calculate(userId,sex,income,age,numFamilyMembers,preexistingconditions);
+            console.log(calcs);
             points = calcs.p;
             var reasoning = calcs.reasoning;
             var recLong = calcs.recommendationLong;
@@ -162,7 +164,9 @@ router.route('/calculate/:uid').post((req, res) =>{
             }else{
                 rec += " Standard";
             }
-    
+            
+            
+
             res.send({
                 userId: userId,
                 sex: sex,

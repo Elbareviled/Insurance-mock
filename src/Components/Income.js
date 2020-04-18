@@ -16,16 +16,20 @@ class Income extends Component{
             textAlign: "center"
         }
         return(
-           <div> 
-                <div>
-                <object style={{height:240, width:240}}type="image/svg/xml" data={Animated}></object>
-                </div>
+           <div class="form-group"> 
                 <p>Enter Estimated Yearly Income</p>
                 <div class="input-group mb-3" style={incomeStyle}>
                     <div class="input-group-prepend">
                         <span class="input-group-text">$</span>
                     </div>
-                    <input style={{textAlign:"center"}} id="income" type="text" class="form-control" aria-label="Amount (to the nearest dollar)"/>
+                    <input 
+                        style={{textAlign:"center"}} 
+                        value={this.props.currentAnswer}
+                        id="income" 
+                        type="text" 
+                        class="form-control" 
+                        onChange={this.props.handleChange}
+                        />
                     
                 </div>
             </div>

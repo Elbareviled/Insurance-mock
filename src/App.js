@@ -70,15 +70,17 @@ class App extends Component {
     }
 
     return(
-      <div class="center-block" style={{marginTop:10, marginLeft:50, width:"90%",}}>
-        {!this.state.hasFinishedForms ? <AnswerBox hasFinishedForms={this.markComplete}/> :''}
-        {this.state.hasFinishedForms ? 
-          <div style={{height:"80vh"}}>
-            <Visualization graphData={this.state.graphData} data={this.state.data}/>
-          </div>:''
-        }
+      <div>
+        <div class="center-block" style={{marginTop:10, marginLeft:50, width:"90%",}}>
+          {!this.state.hasFinishedForms ? <AnswerBox hasFinishedForms={this.markComplete}/> :''}
+          {this.state.hasFinishedForms ? 
+            <div style={{height:"80vh"}}>
+              <Visualization graphData={this.state.graphData} data={this.state.data}/>
+            </div>:''
+          }
         
-
+        </div>
+        
       </div>
     );
   }
